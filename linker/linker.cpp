@@ -3326,7 +3326,12 @@ bool soinfo::link_image(const SymbolLookupList& lookup_list, soinfo* local_group
   if (has_text_relocations) {
     // Fail if app is targeting M or above.
     int app_target_api_level = get_application_target_sdk_version();
+#if defined(TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS)
+    if (app_target_api_level != __ANDROID_API__
+        && app_target_api_level >= 23) {
+#else
     if (app_target_api_level >= 23) {
+#endif
       DL_ERR_AND_LOG("\"%s\" has text relocations (%s#Text-Relocations-Enforced-for-API-level-23)",
                      get_realpath(), kBionicChangesUrl);
       return false;
