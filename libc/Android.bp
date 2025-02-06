@@ -1308,6 +1308,14 @@ cc_library_static {
         "bionic/fork.cpp",
     ],
 
+	product_variables: {
+        lineage: {
+	    	allows_invalid_pthread: {
+	        	cppflags: ["-DALLOWS_INVALID_PTHREAD"],
+	    	},
+        },
+    },
+
     cppflags: ["-Wold-style-cast"],
     include_dirs: ["bionic/libstdc++/include"],
     header_libs: ["bionic_libc_platform_headers"],
